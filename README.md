@@ -26,7 +26,7 @@ public void ConfigureServices(IServiceCollection services)
 ```
 
 # (x.3)配置定时任务
-``` json
+```
 // appsettings.json
 
 {
