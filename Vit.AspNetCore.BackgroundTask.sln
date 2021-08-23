@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{5C315D42-5093-46AC-BAC9-15F0AF1EB7FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vit.AspNetCore.BackgroundTask", "Vit.AspNetCore.BackgroundTask\Vit.AspNetCore.BackgroundTask.csproj", "{7508061D-D443-4926-A4FB-31AA4367B3EE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vit.AspNetCore.BackgroundTask.Demo", "Demo\Vit.AspNetCore.BackgroundTask.Demo\Vit.AspNetCore.BackgroundTask.Demo.csproj", "{73D214A6-DECB-4E35-AC17-8CE5D94A8903}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7508061D-D443-4926-A4FB-31AA4367B3EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7508061D-D443-4926-A4FB-31AA4367B3EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7508061D-D443-4926-A4FB-31AA4367B3EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7508061D-D443-4926-A4FB-31AA4367B3EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73D214A6-DECB-4E35-AC17-8CE5D94A8903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73D214A6-DECB-4E35-AC17-8CE5D94A8903}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73D214A6-DECB-4E35-AC17-8CE5D94A8903}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73D214A6-DECB-4E35-AC17-8CE5D94A8903}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{73D214A6-DECB-4E35-AC17-8CE5D94A8903} = {5C315D42-5093-46AC-BAC9-15F0AF1EB7FC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7DA16E3-9949-49FA-B0B4-F830636DE60F}
+	EndGlobalSection
+EndGlobal

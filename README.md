@@ -6,7 +6,7 @@ AspNetCore后台定时任务
 // *.csproj
 
 <ItemGroup>	 
-	  <PackageReference Include="Vit.AspNetCore.BackgroundTask" Version="2.1.4.514" />
+	  <PackageReference Include="Vit.AspNetCore.BackgroundTask" Version="2.2.3" />
 </ItemGroup>
 ```
 
@@ -34,6 +34,8 @@ public void ConfigureServices(IServiceCollection services)
       {
         /* 任务名称 */
         "name": "消息提醒",
+        /* 是否在创建任务时立即执行一次。默认：false */
+        "invokeWhenCreate": false,
         /* 首次任务开始时间。如"13:00:00"代表下午1点才会执行第一次任务 */
         "startTime": "00:00:00",
         /* 执行周期，默认1天执行一次（"24:00:00"）。如"01:00:00"代表一个小时执行一次 */

@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Reflection;
 using System.Threading;
 using Vit.Core.Module.Log;
 using System.Linq;
+using Vit.Core.Util.Reflection;
+using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Vit.AspNetCore.BackgroundTask
 {
@@ -32,9 +34,15 @@ namespace Vit.AspNetCore.BackgroundTask
         public string className;
 
         /// <summary>
-        /// 任务的函数名，如:"SendMessage"
+        /// 任务的函数名，如:"SendMessage"。函数参数（若存在）会通过依赖注入的方式构建
         /// </summary>
         public string methodName;
+
+
+        /// <summary>
+        /// 是否在创建任务时立即执行一次。默认：false
+        /// </summary>
+        public bool? invokeWhenCreate;
 
 
 
@@ -47,25 +55,26 @@ namespace Vit.AspNetCore.BackgroundTask
 
             DateTime now = DateTime.Now;
 
-
-            #region (x.1)获取起始时间点            
-            DateTime startTime = DateTime.Today;
+            #region (x.1)type
+            try
             {
-                var times = (this.startTime ?? "00:00:00").Split(':');
-                if (times.Length >= 1)
-                {
-                    startTime = startTime.AddHours(Convert.ToDouble(times[0]));
-                }
-                if (times.Length >= 2)
-                {
-                    startTime = startTime.AddMinutes(Convert.ToDouble(times[1]));
-                }
-                if (times.Length >= 3)
-                {
-                    startTime = startTime.AddSeconds(Convert.ToDouble(times[2]));
-                }
+                type = ObjectLoader.GetType(className);
+                //type = Assembly.GetEntryAssembly().GetType(className);
             }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+            }
+
+
+            if (type == null)
+            {
+                Logger.Info("[TimeBackgroundService][" + name + "] 出错。 未找到类型“ " + className + "”。");
+                return;
+            }
+
             #endregion
+
 
             #region (x.2)获取任务周期
             TimeSpan peroid = TimeSpan.Zero;
@@ -87,6 +96,24 @@ namespace Vit.AspNetCore.BackgroundTask
             #endregion
 
 
+            #region (x.3)获取起始时间点            
+            DateTime startTime = DateTime.Today;
+            {
+                var times = (this.startTime ?? "00:00:00").Split(':');
+                if (times.Length >= 1)
+                {
+                    startTime = startTime.AddHours(Convert.ToDouble(times[0]));
+                }
+                if (times.Length >= 2)
+                {
+                    startTime = startTime.AddMinutes(Convert.ToDouble(times[1]));
+                }
+                if (times.Length >= 3)
+                {
+                    startTime = startTime.AddSeconds(Convert.ToDouble(times[2]));
+                }
+            }
+
             //如果当前时间大于设置时间，后移到对应任务周期内
             while (startTime < now)
             {
@@ -94,20 +121,38 @@ namespace Vit.AspNetCore.BackgroundTask
             }
             var dueTime = startTime - now;
 
+            #endregion
+
+
+            #region (x.4)是否在创建任务时立即执行一次            
+            if (invokeWhenCreate == true)
+            {
+                try
+                {
+                    Task.Run(() => DoWork(null));
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex);
+                }
+            }
+            #endregion
+
+
+            //(x.5)启动定时器
             timer = new System.Threading.Timer(DoWork);
             timer.Change(dueTime, peroid);
         }
 
         Timer timer = null;
+        Type type = null;
 
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void DoWork(object state)
         {
             try
             {
                 Logger.Info("[TimeBackgroundService][" + name + "]run ");
-
-                Type type = Assembly.GetEntryAssembly().GetType(className);
 
                 if (type == null) return;
 
