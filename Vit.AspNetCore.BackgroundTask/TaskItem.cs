@@ -44,14 +44,18 @@ namespace Vit.AspNetCore.BackgroundTask
         /// </summary>
         public bool? invokeWhenCreate;
 
-
+        /// <summary>
+        /// 在执行任务前是否打印日志。默认：false
+        /// </summary>
+        public bool? printLog;
 
         internal IServiceProvider serviceProvider;
         public void Start()
         {
             if (timer != null) return;
 
-            Logger.Info("[TimeBackgroundService][" + name + "]init ");
+            if (printLog == true)
+                Logger.Info("[TimeBackgroundService][" + name + "]init ");
 
             DateTime now = DateTime.Now;
 
@@ -152,7 +156,8 @@ namespace Vit.AspNetCore.BackgroundTask
         {
             try
             {
-                Logger.Info("[TimeBackgroundService][" + name + "]run ");
+                if (printLog == true)
+                    Logger.Info("[TimeBackgroundService][" + name + "]run ");
 
                 if (type == null) return;
 
@@ -193,7 +198,8 @@ namespace Vit.AspNetCore.BackgroundTask
         {
             if (timer == null) return;
 
-            Logger.Info("[TimeBackgroundService][" + name + "]stop ");
+            if (printLog == true)
+                Logger.Info("[TimeBackgroundService][" + name + "]stop ");
 
             //停止
             timer.Change(-1, 0);

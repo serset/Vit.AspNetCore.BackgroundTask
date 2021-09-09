@@ -27,8 +27,10 @@ namespace Vit.AspNetCore.BackgroundTask
     /// <para>    {                                                                                                 </para>
     /// <para>      /* 任务名称 */                                                                                  </para>
     /// <para>      "name": "消息提醒",                                                                             </para>
-    /// <para>      /* 是否在创建任务时立即执行一次。默认：false                   */                               </para>
+    /// <para>      /* 是否在创建任务时立即执行一次。默认：false */                                                 </para>
     /// <para>      "invokeWhenCreate": false,                                                                      </para>
+    /// <para>      /* 在执行任务前是否打印日志。默认：false */                                                     </para>
+    /// <para>      "printLog": false,                                                                              </para>
     /// <para>      /* 首次任务开始时间。如"13:00:00"代表下午1点才会执行第一次任务 */                               </para>
     /// <para>      "startTime": "00:00:00",                                                                        </para>
     /// <para>      /* 执行周期，默认1天执行一次（"24:00:00"）。如"01:00:00"代表一个小时执行一次 */                 </para>
